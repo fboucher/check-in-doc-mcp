@@ -9,8 +9,6 @@ public class CheckInDocTool(ResearchClient client)
 {
     private readonly ResearchClient researchClient = client;
 
-
-
     [McpServerTool, Description("Search about a topic in documentaion websites")]
     public async Task<string> SearchInDoc(string question)
     {
