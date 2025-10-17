@@ -11,8 +11,6 @@ builder.Logging.AddConsole(consoleLogOptions =>
 builder.Services.AddMcpServer()
     .WithTools<CheckInDocTool>().WithHttpTransport();
 
-//builder.AddServiceDefaults();
-
 builder.Services.AddHttpClient<ResearchClient>();
             
 var app = builder.Build();
