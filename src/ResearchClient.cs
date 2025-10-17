@@ -27,7 +27,7 @@ public class ResearchClient
 
         httpClient = client;
         model = "reka-flash-research";
-        endpoint = "http://api.reka.ai/v1";
+        endpoint = "http://api.reka.ai/v1/chat/completions";
         allowedDomains = Environment.GetEnvironmentVariable("ALLOWED_DOMAINS")!.Split(",") ?? throw new InvalidOperationException("ALLOWED_DOMAINS is not set. Set it to a comma-separated list of domains.");
     }
 
@@ -65,23 +65,31 @@ public class ResearchClient
 
         HttpResponseMessage? response = null;
 
-        using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
-        request.Headers.Add("Authorization", $"Bearer {apiKey}");
-        request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-        response = await httpClient!.SendAsync(request);
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        var rekaResponse = JsonSerializer.Deserialize<RekaResponse>(responseContent);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var answerStr = rekaResponse!.Choices![0]!.Message!.Content;
-            return answerStr!;
+            using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
+            request.Headers.Add("Authorization", $"Bearer {apiKey}");
+            request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            response = await httpClient!.SendAsync(request);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var rekaResponse = JsonSerializer.Deserialize<RekaResponse>(responseContent);
+                var answerStr = rekaResponse!.Choices![0]!.Message!.Content;
+                return answerStr!;
+            }
+            else
+            {
+                throw new Exception($"Request failed with status code: {response.StatusCode}. Response: {responseContent}");
+            }
         }
-        else
+        catch (Exception exp)
         {
-            throw new Exception($"Request failed with status code: {response.StatusCode}. Response: {responseContent}");
+            var exMsg = $"An error occurred while processing the request: {exp.Message}";
+            Console.WriteLine(exMsg);
+            return exMsg;
         }
     }
 }
