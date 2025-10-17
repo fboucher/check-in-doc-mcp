@@ -18,17 +18,6 @@ This project is a Model Context Protocol (MCP) Server that enables powerful, cus
 
 ---
 
-# Running in Containers
-
-This project provides container support for building and running the C# application using .NET 9.0. The container setup uses the provided `Dockerfile` in the `src` directory and a `compose.yaml` for orchestration.
-
-## Requirements
-
-- Docker or Podman with Compose support installed
-- .NET 9.0 (handled by the container images)
-
-
-
 ## Environment Variables
 
 - The service uses environment variables defined in `src/.env`. You can use the provided `src/.env-sample` as a template.
@@ -45,7 +34,7 @@ This project provides container support for building and running the C# applicat
 
 Voilà! You are all set!
 
-## Build and Run
+## Running the MCP Server
 
 1. Ensure your environment variables are set in `src/.env` (copy from `src/.env-sample`).
 2. You can run the project in several ways:
