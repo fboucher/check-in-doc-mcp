@@ -101,5 +101,15 @@ Once the MCP server is up and running, to add it in VS Code, select **Add a MCP 
 }
 ```
 
-
 Refer to the Dockerfile and Compose file for further customization as needed.
+
+## References
+
+- [Docs: Reka Research API](https://docs.reka.ai/research)
+- [Discord](https://link.reka.ai/discord)
+
+## 🤝 Contributions
+
+If you find a bug or would like to add a feature, please read our [Code of Conduct](CODE_OF_CONDUCT.md) and the [Contributing Guide](CONTRIBUTING.md).
+
+Feel free to open an issue or submit a PR—feedback and improvements are welcome.
