@@ -1,0 +1,68 @@
+# Version control
+.git/
+.gitignore
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS system files
+.DS_Store
+src/.DS_Store
+
+# Build outputs and intermediate files
+src/bin/
+src/obj/
+dist/
+build/
+out/
+tmp/
+temp/
+*.tmp
+
+# Environment and secrets
+.env*
+src/.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# Documentation
+*.md
+README*
+docs/
+
+# Docker files
+Dockerfile*
+docker-compose*
+
+# Project-specific patterns
+local/
+.local/
+
+# C# specific
+*.user
+*.suo
+*.pdb
+*.cache
+*.mdb
+*.dbmdl
+*.log
+
+# Test and debug files
+test/
+tests/
+debug/
+*.log
+
+# Ignore sample environment files (keep for reference, but not in build context)
+src/.env-sample
+
+# Ignore other VCS
+.svn/
+.hg/

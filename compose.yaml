@@ -1,0 +1,21 @@
+services:
+  csharp-checkindocmcp:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: csharp-checkindocmcp
+    restart: unless-stopped
+    init: true
+
+    ports:
+      - "8080:8080"
+
+    env_file:
+      - ./src/.env
+
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
