@@ -1,34 +1,33 @@
-using System;
-using System.ClientModel;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 using CheckInDocMCP.Domain;
-using DotNetEnv;
-using Microsoft.Agents.AI;
-using Microsoft.Extensions.AI;
-using OpenAI;
+using Microsoft.Extensions.Logging;
 
 namespace CheckInDocMCP;
 
-public class ResearchClient
+public class ResearchService
 {
-    private string apiKey = string.Empty;
+    private readonly string apiKey = string.Empty;
     private readonly string model = string.Empty;
-    private string endpoint = string.Empty;
+    private readonly string endpoint = string.Empty;
     private readonly HttpClient? httpClient;
+    private readonly ILogger<ResearchService> logger;
 
     private readonly string[] allowedDomains = new string[] { "docs.reka.ai" };
 
-    public ResearchClient(HttpClient client)
+    public ResearchService(HttpClient client, string apiKey, string[] allowedDomains, ILogger<ResearchService> logger)
     {
-        Env.TraversePath().Load();
-        apiKey = Environment.GetEnvironmentVariable("APIKEY") ?? throw new InvalidOperationException("APIKEY is not set.");
+        this.apiKey = apiKey;
+        this.allowedDomains = allowedDomains;
+        this.logger = logger;
 
         httpClient = client;
         model = "reka-flash-research";
         endpoint = "http://api.reka.ai/v1/chat/completions";
-        allowedDomains = Environment.GetEnvironmentVariable("ALLOWED_DOMAINS")!.Split(",") ?? throw new InvalidOperationException("ALLOWED_DOMAINS is not set. Set it to a comma-separated list of domains.");
+
+        // Log initialization without exposing the API key
+        logger.LogInformation("ResearchService initialized with model: {Model}, allowed domains: {Domains}", 
+            model, string.Join(", ", allowedDomains));
     }
 
 

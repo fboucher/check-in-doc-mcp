@@ -1,0 +1,12 @@
+
+name: check-in-doc-mcp
+services:
+  checkindocmcp:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: checkindocmcp
+    env_file:
+      - src/.env
+    stdin_open: true
+    tty: true
