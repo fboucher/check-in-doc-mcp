@@ -15,6 +15,13 @@ public class ResearchService
 
     private readonly string[] allowedDomains = new string[] { "docs.reka.ai" };
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResearchService"/> class.
+    /// </summary>
+    /// <param name="client">The HTTP client used for making API requests.</param>
+    /// <param name="apiKey">The API key for authenticating with the Reka AI service. This is sensitive information.</param>
+    /// <param name="allowedDomains">An array of allowed domains for web search research.</param>
+    /// <param name="logger">The logger instance for logging operations.</param>
     public ResearchService(HttpClient client, string apiKey, string[] allowedDomains, ILogger<ResearchService> logger)
     {
         this.apiKey = apiKey;
@@ -26,7 +33,7 @@ public class ResearchService
         endpoint = "http://api.reka.ai/v1/chat/completions";
 
         // Log initialization without exposing the API key
-        logger.LogInformation("ResearchService initialized with model: {Model}, allowed domains: {Domains}", 
+        logger.LogInformation("ResearchService initialized with model: {Model}, allowed domains: {Domains}",
             model, string.Join(", ", allowedDomains));
     }
 
@@ -53,6 +60,11 @@ public class ResearchService
                 {
                     allowed_domains = allowedDomains,
                     max_uses = 4
+
+                },
+                parallel_thinking = new
+                {
+                    mode = "high"
                 }
             },
         };
